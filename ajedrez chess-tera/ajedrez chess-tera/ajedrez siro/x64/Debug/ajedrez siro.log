@@ -1,0 +1,5 @@
+﻿  main_visual.cpp
+C:\Users\34629\Downloads\ajedrez chess-tera\ajedrez chess-tera\ajedrez siro\main_visual.cpp(120,21): warning C4244: 'inicializando': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\34629\Downloads\ajedrez chess-tera\ajedrez chess-tera\ajedrez siro\main_visual.cpp(121,21): warning C4244: 'inicializando': conversión de 'int' a 'float'; posible pérdida de datos
+main_visual.obj : error LNK2019: símbolo externo "public: int __cdecl Tablero::moverPieza(int,int,int,int)" (?moverPieza@Tablero@@QEAAHHHHH@Z) sin resolver al que se hace referencia en la función "void __cdecl manejarClic(int,int)" (?manejarClic@@YAXHH@Z)
+C:\Users\34629\Downloads\ajedrez chess-tera\ajedrez chess-tera\ajedrez siro\x64\Debug\ajedrez siro.exe : fatal error LNK1120: 1 externos sin resolver
