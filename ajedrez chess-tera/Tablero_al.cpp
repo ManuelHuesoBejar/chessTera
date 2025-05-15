@@ -129,8 +129,8 @@ void Tablero_al::cargarLosAlamos() {
     // Blancas (abajo)
     casillas[5][0] = new Torre(true);
     casillas[5][1] = new Caballo(true);
-    casillas[5][3] = new Reina(true);
     casillas[5][2] = new Rey(true);
+    casillas[5][3] = new Reina(true);    
     casillas[5][4] = new Caballo(true);
     casillas[5][5] = new Torre(true);
     

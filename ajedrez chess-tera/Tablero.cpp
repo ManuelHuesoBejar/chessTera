@@ -159,8 +159,8 @@ void Tablero::cargarSilverman() {
 
         // FILA 3 (blancas abajo): TORRE, REINA, REINA, TORRE
         casillas[3][0] = new Torre(true);
-        casillas[3][2] = new Reina(true);
         casillas[3][1] = new Rey(true);
+        casillas[3][2] = new Reina(true);
         casillas[3][3] = new Torre(true);
 }
 
