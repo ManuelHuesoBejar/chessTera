@@ -1,1 +1,2 @@
 C:\Users\Siro\Desktop\ajedrez siro\x64\Debug\ajedrez siro.exe
+C:\Users\34629\Documents\GitHub\chessTera\ajedrez chess-tera\x64\Debug\ajedrez siro.exe

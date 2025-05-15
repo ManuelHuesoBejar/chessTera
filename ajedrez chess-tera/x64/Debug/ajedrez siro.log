@@ -1,8 +1,4 @@
-﻿  Rey.cpp
-  Torre.cpp
-  main_visual.cpp
-C:\Users\Siro\Desktop\ajedrez siro\main_visual.cpp(41,21): warning C4244: 'inicializando': conversión de 'int' a 'float'; posible pérdida de datos
-C:\Users\Siro\Desktop\ajedrez siro\main_visual.cpp(42,21): warning C4244: 'inicializando': conversión de 'int' a 'float'; posible pérdida de datos
+﻿  Tablero.cpp
+  Tablero_al.cpp
   Generando código...
-C:\Users\Siro\Desktop\ajedrez siro\Rey.cpp(24): warning C4715: 'Rey::movimientoValido': no todas las rutas de acceso de control devuelven un valor
-  ajedrez siro.vcxproj -> C:\Users\Siro\Desktop\ajedrez siro\x64\Debug\ajedrez siro.exe
+  ajedrez siro.vcxproj -> C:\Users\34629\Documents\GitHub\chessTera\ajedrez chess-tera\x64\Debug\ajedrez siro.exe
