@@ -11,6 +11,7 @@
 #include "Caballo.h"
 #include "Torre.h"
 #include <iostream>
+#include "ETSIDI.h"
 // Mapa de texturas
 std::map<std::string, GLuint> texturas;
 Tablero t;
