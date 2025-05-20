@@ -185,7 +185,7 @@ Pieza* Tablero_al::obtenerPieza_al(int x, int y) {
     return casillas[x][y];
 }
 
-void Tablero_al::cargarLosAlamos() {
+void Tablero_al::cargarSilverman() {
     // Limpiar tablero
     for (int i = 0; i < 4; ++i)
         for (int j = 0; j < 4; ++j) {
