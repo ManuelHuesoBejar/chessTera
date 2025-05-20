@@ -1,0 +1,6 @@
+﻿  main_visual.cpp
+C:\Users\natal\Downloads\ajedrez siro\ajedrez siro\main_visual.cpp(120,21): warning C4244: 'inicializando': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\natal\Downloads\ajedrez siro\ajedrez siro\main_visual.cpp(121,21): warning C4244: 'inicializando': conversión de 'int' a 'float'; posible pérdida de datos
+  Torre.cpp
+  Generando código...
+  ajedrez siro.vcxproj -> C:\Users\natal\Downloads\ajedrez siro\ajedrez siro\x64\Debug\ajedrez siro.exe
