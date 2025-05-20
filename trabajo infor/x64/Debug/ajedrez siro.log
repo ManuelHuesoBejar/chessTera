@@ -1,6 +1,15 @@
-﻿  main_visual.cpp
-C:\Users\natal\Downloads\ajedrez siro\ajedrez siro\main_visual.cpp(120,21): warning C4244: 'inicializando': conversión de 'int' a 'float'; posible pérdida de datos
-C:\Users\natal\Downloads\ajedrez siro\ajedrez siro\main_visual.cpp(121,21): warning C4244: 'inicializando': conversión de 'int' a 'float'; posible pérdida de datos
+﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(514,5): warning MSB8028: El directorio intermedio (x64\Debug\) contiene archivos compartidos de otro proyecto (ajedrez siro.vcxproj). Esto puede dar lugar a un comportamiento incorrecto de limpieza y recompilación.
+  Caballo.cpp
+  main_visual.cpp
+C:\Users\34629\Documents\GitHub\chessTera\trabajo infor\main_visual.cpp(120,21): warning C4244: 'inicializando': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\34629\Documents\GitHub\chessTera\trabajo infor\main_visual.cpp(121,21): warning C4244: 'inicializando': conversión de 'int' a 'float'; posible pérdida de datos
+  MapaTexturas.cpp
+  Peon.cpp
+  Reina.cpp
+  Rey.cpp
+  Tablero.cpp
+  Tablero_al.cpp
+  Texturas.cpp
   Torre.cpp
   Generando código...
-  ajedrez siro.vcxproj -> C:\Users\natal\Downloads\ajedrez siro\ajedrez siro\x64\Debug\ajedrez siro.exe
+  ajedrez siro.vcxproj -> C:\Users\34629\Documents\GitHub\chessTera\trabajo infor\x64\Debug\Trabajo infor.exe
