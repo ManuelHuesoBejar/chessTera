@@ -1,4 +1,4 @@
-/*
+
 #include "Tablero_al.h"
 #include <iostream>
 #include "Rey.h"
@@ -113,9 +113,9 @@ Pieza* Tablero_al::obtenerPieza_al(int x, int y) {
     return casillas[x][y];
 }
 
-*/
 
-#include "Tablero_al.h"
+
+/*#include "Tablero_al.h"
 #include "Peon.h"
 #include "Reina.h"
 #include "Rey.h"
@@ -210,4 +210,4 @@ void Tablero_al::cargarSilverman() {
     casillas[3][1] = new Rey(true);
     casillas[3][2] = new Reina(true);
     casillas[3][3] = new Torre(true);
-}
+}*/

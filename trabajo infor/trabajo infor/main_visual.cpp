@@ -257,11 +257,11 @@ int main(int argc, char** argv) {
     std::cout << "Opcion: ";
     std::cin >> opcion;
     std::cout << "Opcion seleccionada: " << opcion << std::endl;
-    /*
+    
     if (opcion == 1)
         t2.cargarLosAlamos();
     else
-    */
+    
         t.cargarSilverman();
 
 

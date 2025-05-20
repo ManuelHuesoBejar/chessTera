@@ -13,7 +13,7 @@ std::string Reina::obtenerNombreClave() const {
 }
 
 
-bool Reina::movimientoValido(int xi, int yi, int xf, int yf, Pieza* tablero[4][4], int filas, int columnas) {
+bool Reina::movimientoValido(int xi, int yi, int xf, int yf, Pieza* tablero[6][6], int filas, int columnas) {
     int dx = std::abs(xf - xi);
     int dy = std::abs(yf - yi);
 

@@ -28,7 +28,7 @@ public:
 class Tablero_al 
 {
 private:
-    Pieza* casillas[4][4];  // ← Cambiado a 4x4
+    Pieza* casillas[6][6];  // ← Cambiado a 4x4
 
 public:
     Tablero_al();
@@ -36,7 +36,9 @@ public:
 
     void colocarPieza_al(Pieza* pieza, int x, int y);
     int moverPieza_al(int xi, int yi, int xf, int yf);
-    void cargarSilverman();  // ← Nuevo para testear
+    //void cargarSilverman();  // ← Nuevo para testear
+    void cargarLosAlamos();
+    void mostrar_al();
     Pieza* obtenerPieza_al(int x, int y);
 };
 

@@ -156,7 +156,7 @@ int Tablero::moverPieza(int xi, int yi, int xf, int yf) {
 
     if (!origen) return 0;
     
-    if (!origen->movimientoValido(xi, yi, xf, yf, casillas, 4, 4))
+    //if (!origen->movimientoValido(xi, yi, xf, yf, casillas, 4, 4))
         return 0;
 
     // Captura al rey (fin del juego)

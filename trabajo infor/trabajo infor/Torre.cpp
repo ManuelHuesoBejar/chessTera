@@ -14,7 +14,7 @@ std::string Torre::obtenerNombreClave() const {
 
 
 
-bool Torre::movimientoValido(int xi, int yi, int xf, int yf, Pieza* tablero[4][4], int filas, int columnas) {
+bool Torre::movimientoValido(int xi, int yi, int xf, int yf, Pieza* tablero[6][6], int filas, int columnas) {
     // Verificar límites 
     if (xi < 0 || xi >= filas || yi < 0 || yi >= columnas ||
         xf < 0 || xf >= filas || yf < 0 || yf >= columnas) {
