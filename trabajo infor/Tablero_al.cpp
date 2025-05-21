@@ -88,8 +88,8 @@ void Tablero_al::cargarLosAlamos() {
     // Negras
     casillas[0][0] = new Torre(false);
     casillas[0][1] = new Caballo(false);
-    casillas[0][2] = new Rey(false);
-    casillas[0][3] = new Reina(false);
+    casillas[0][3] = new Rey(false);
+    casillas[0][2] = new Reina(false);
     casillas[0][4] = new Caballo(false);
     casillas[0][5] = new Torre(false);
 
@@ -99,8 +99,8 @@ void Tablero_al::cargarLosAlamos() {
     // Blancas
     casillas[5][0] = new Torre(true);
     casillas[5][1] = new Caballo(true);
-    casillas[5][2] = new Rey(true);
-    casillas[5][3] = new Reina(true);
+    casillas[5][3] = new Rey(true);
+    casillas[5][2] = new Reina(true);
     casillas[5][4] = new Caballo(true);
     casillas[5][5] = new Torre(true);
 

@@ -207,8 +207,8 @@ void Tablero::cargarSilverman() {
 
     // FILA 0 (negras arriba): TORRE, REINA, REINA, TORRE
     casillas[0][0] = new Torre(false);
-    casillas[0][1] = new Rey(false);
-    casillas[0][2] = new Reina(false);
+    casillas[0][2] = new Rey(false);
+    casillas[0][1] = new Reina(false);
     casillas[0][3] = new Torre(false);
 
     // FILA 1 (peones negros)
@@ -221,7 +221,7 @@ void Tablero::cargarSilverman() {
 
     // FILA 3 (blancas abajo): TORRE, REINA, REINA, TORRE
     casillas[3][0] = new Torre(true);
-    casillas[3][2] = new Reina(true);
-    casillas[3][1] = new Rey(true);
+    casillas[3][1] = new Reina(true);
+    casillas[3][2] = new Rey(true);
     casillas[3][3] = new Torre(true);
 }
