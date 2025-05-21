@@ -1,14 +1,5 @@
-﻿  Caballo.cpp
-  main_visual.cpp
+﻿  main_visual.cpp
 C:\Users\alvar\Desktop\chessTera\trabajo infor\main_visual.cpp(120,21): warning C4244: 'inicializando': conversión de 'int' a 'float'; posible pérdida de datos
 C:\Users\alvar\Desktop\chessTera\trabajo infor\main_visual.cpp(121,21): warning C4244: 'inicializando': conversión de 'int' a 'float'; posible pérdida de datos
-  MapaTexturas.cpp
-  Peon.cpp
-  Reina.cpp
-  Rey.cpp
-  Tablero.cpp
-  Tablero_al.cpp
-  Texturas.cpp
-  Torre.cpp
-  Generando código...
+  LINK : no se encontró C:\Users\alvar\Desktop\chessTera\trabajo infor\x64\Debug\Trabajo infor.exe o no lo generó el último vínculo incremental; ejecutando vínculo completo
   ajedrez siro.vcxproj -> C:\Users\alvar\Desktop\chessTera\trabajo infor\x64\Debug\Trabajo infor.exe
