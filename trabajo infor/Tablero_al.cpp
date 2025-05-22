@@ -85,7 +85,7 @@ int Tablero_al::moverPieza_al(int xi, int yi, int xf, int yf) {
     if (!origen) return 0;
 
     // Verifica si el movimiento es válido según la pieza
-    if (!origen->movimientoValido(xi, yi, xf, yf, casillas, 6, 6))
+   if (!origen->movimientoValido(xi, yi, xf, yf, (Pieza**)casillas, 6, 6))
         return 0;
 
     Pieza* destino = casillas[xf][yf];
@@ -187,7 +187,7 @@ bool Tablero_al::reyEnJaque(bool esBlanco) {
         for (int j = 0; j < 6; ++j) {
             Pieza* atacante = casillas[i][j];
             if (atacante && atacante->esBlanca() != esBlanco) {
-                if (atacante->movimientoValido(i, j, reyX, reyY, casillas, 6, 6)) {
+                if (atacante->movimientoValido(i, j, reyX, reyY, (Pieza**)casillas, 6, 6)) {
                     return true;
                 }
             }

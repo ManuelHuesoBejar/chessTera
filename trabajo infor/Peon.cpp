@@ -43,7 +43,7 @@ bool Peon::movimientoValido(int xi, int yi, int xf, int yf, Pieza*** tablero, in
         return false;
 }
     */
-bool Peon::movimientoValido(int xi, int yi, int xf, int yf, Pieza* tablero[6][6], int filas, int columnas) {
+bool Peon::movimientoValido(int xi, int yi, int xf, int yf, Pieza** tablero, int filas, int columnas) {
     if (xi < 0 || xi >= filas || yi < 0 || yi >= columnas ||
         xf < 0 || xf >= filas || yf < 0 || yf >= columnas) {
         std::cout << "Movimiento fuera de los límites del tablero.\n";
@@ -54,32 +54,32 @@ bool Peon::movimientoValido(int xi, int yi, int xf, int yf, Pieza* tablero[6][6]
     int avanceEsperado = xi + dir;
 
     // Movimiento hacia adelante
-    if (xf == avanceEsperado && yf == yi && tablero[xf][yf] == nullptr) {
+    if (xf == avanceEsperado && yf == yi && tablero[xf * columnas + yf] == nullptr) {
         std::cout << "Movimiento válido hacia adelante.\n";
         return true;
     }
 
     // Captura en diagonal
     if (xf == avanceEsperado && std::abs(yf - yi) == 1) {
-        Pieza* objetivo = tablero[xf][yf];
+        Pieza* pieza = tablero[xf * columnas + yf];
 
         // DEBUG: imprimir puntero destino
-        std::cout << "Intentando capturar en [" << xf << "," << yf << "] -> puntero: " << objetivo << "\n";
+        std::cout << "Intentando capturar en [" << xf << "," << yf << "] -> puntero: " << pieza << "\n";
 
-        if (!objetivo) {
+        if (!pieza) {
             std::cout << "No hay pieza en la diagonal para capturar.\n";
             return false;
         }
 
-        uintptr_t raw = reinterpret_cast<uintptr_t>(objetivo);
+        uintptr_t raw = reinterpret_cast<uintptr_t>(pieza);
         if (raw == 0xFDFDFDFD || raw == 0xDDDDDDDD || raw == 0xCDCDCDCD || raw == 0 || raw > 0x00007FFFFFFFFFFF) {
             std::cout << "Puntero corrupto detectado en destino. Movimiento inválido.\n";
             return false;
         }
 
         try {
-            char simbolo = objetivo->obtenerSimbolo();  // posible crash aquí
-            bool color = objetivo->esBlanca();
+            char simbolo = pieza->obtenerSimbolo();  // posible crash aquí
+            bool color = pieza->esBlanca();
 
             if (color == esBlanco) {
                 std::cout << "La pieza en la diagonal es del mismo color. Movimiento inválido.\n";

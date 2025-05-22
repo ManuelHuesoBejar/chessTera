@@ -14,25 +14,26 @@ std::string Torre::obtenerNombreClave() const {
 
 
 
-bool Torre::movimientoValido(int xi, int yi, int xf, int yf, Pieza* tablero[6][6], int filas, int columnas) {
-    if (xi < 0 || xi >= filas || yi < 0 || yi >= columnas ||
-        xf < 0 || xf >= filas || yf < 0 || yf >= columnas) {
-        return false;
-    }
-
-    if (xi == xf) {
-        int step = (yf > yi) ? 1 : -1;
-        for (int i = 1; i < abs(yf - yi); i++) {
-            if (tablero[xi][yi + i * step] != nullptr)
+bool Torre::movimientoValido(int xi, int yi, int xf, int yf, Pieza** tablero, int filas, int columnas) {
+    int dx = xf - xi;
+    int dy = yf - yi;
+    // Movimiento horizontal
+    if (yi == yf) {
+        int step = (dx > 0) ? 1 : -1;
+        for (int i = 1; i < abs(dx); i++) {
+            int fila = xi + i * step;
+            if (tablero[fila * columnas + yi] != nullptr)
                 return false;
         }
         return true;
     }
 
-    if (yi == yf) {
-        int step = (xf > xi) ? 1 : -1;
-        for (int i = 1; i < abs(xf - xi); i++) {
-            if (tablero[xi + i * step][yi] != nullptr)
+    // Movimiento vertical
+    if (xi == xf) {
+        int step = (dy > 0) ? 1 : -1;
+        for (int i = 1; i < abs(dy); i++) {
+            int columna = yi + i * step;
+            if (tablero[xi * columnas + columna] != nullptr)
                 return false;
         }
         return true;

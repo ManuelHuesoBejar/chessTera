@@ -7,7 +7,7 @@ class Reina : public Pieza {
 public:
     Reina(bool esBlanco);
     char obtenerSimbolo() const override;
-    bool movimientoValido(int xi, int yi, int xf, int yf, Pieza* tablero[6][6], int filas, int columnas) override;
+    bool movimientoValido(int xi, int yi, int xf, int yf, Pieza** tablero, int filas, int columnas) override;
     std::string obtenerNombreClave() const override; 
 };
 

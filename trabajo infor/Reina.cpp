@@ -13,7 +13,7 @@ std::string Reina::obtenerNombreClave() const {
 }
 
 
-bool Reina::movimientoValido(int xi, int yi, int xf, int yf, Pieza* tablero[6][6], int filas, int columnas) {
+bool Reina::movimientoValido(int xi, int yi, int xf, int yf, Pieza** tablero, int filas, int columnas) {
     int dx = xf - xi;
     int dy = yf - yi;
 
@@ -27,7 +27,9 @@ bool Reina::movimientoValido(int xi, int yi, int xf, int yf, Pieza* tablero[6][6
         int stepX = (dx > 0) ? 1 : -1;
         int stepY = (dy > 0) ? 1 : -1;
         for (int i = 1; i < abs(dx); i++) {
-            if (tablero[xi + i * stepX][yi + i * stepY] != nullptr)
+            int fila = xi + i * stepX;
+            int columna = yi + i * stepY;
+            if (tablero[fila * columnas + columna] != nullptr)
                 return false; // Obstáculo en el camino
         }
         return true;
@@ -37,7 +39,8 @@ bool Reina::movimientoValido(int xi, int yi, int xf, int yf, Pieza* tablero[6][6
     if (yi == yf) {
         int step = (dx > 0) ? 1 : -1;
         for (int i = 1; i < abs(dx); i++) {
-            if (tablero[xi + i * step][yi] != nullptr)
+            int fila = xi + i * step;
+            if (tablero[fila * columnas + yi] != nullptr)
                 return false;
         }
         return true;
@@ -47,7 +50,8 @@ bool Reina::movimientoValido(int xi, int yi, int xf, int yf, Pieza* tablero[6][6
     if (xi == xf) {
         int step = (dy > 0) ? 1 : -1;
         for (int i = 1; i < abs(dy); i++) {
-            if (tablero[xi][yi + i * step] != nullptr)
+            int columna = yi + i * step;
+            if (tablero[xi * columnas + columna] != nullptr)
                 return false;
         }
         return true;
@@ -56,13 +60,13 @@ bool Reina::movimientoValido(int xi, int yi, int xf, int yf, Pieza* tablero[6][6
     return false;
 }
 
-    
-    /*int dx = std::abs(xf - xi);
-    int dy = std::abs(yf - yi);
 
-    // Movimiento recto u en diagonal
-    if (dx == dy || xi == xf || yi == yf) {
-        return true; 
-    }
-    return false;
+/*int dx = std::abs(xf - xi);
+int dy = std::abs(yf - yi);
+
+// Movimiento recto u en diagonal
+if (dx == dy || xi == xf || yi == yf) {
+    return true;
+}
+return false;
 }*/

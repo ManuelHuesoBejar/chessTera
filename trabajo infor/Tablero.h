@@ -17,10 +17,15 @@ public:
     //void cargarLosAlamos();
     Pieza* obtenerPieza(int x, int y);
     void cargarSilverman();
-
+    bool reyEnJaque(bool esBlanco);
+    bool esJaqueMate(bool turnoBlanco);
     /*int obtenerFilas() const { return filas; }
     int obtenerColumnas() const { return columnas; }*/
+    // Tablero.h
+ 
+           
+    };
 
-};
+
 
 #endif
