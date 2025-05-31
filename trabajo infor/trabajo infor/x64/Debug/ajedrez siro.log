@@ -1,2 +1,12 @@
-﻿  Tablero_al.cpp
-  ajedrez siro.vcxproj -> C:\Users\SIRO\OneDrive\Documentos\GitHub\chessTera\trabajo infor\x64\Debug\Trabajo infor.exe
+﻿  Peon.cpp
+  Tablero.cpp
+  Tablero_al.cpp
+  main_visual.cpp
+C:\Users\Rafa\Desktop\chessTera-main\trabajo infor\main_visual.cpp(61,21): warning C4244: 'inicializando': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\Rafa\Desktop\chessTera-main\trabajo infor\main_visual.cpp(62,21): warning C4244: 'inicializando': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\Rafa\Desktop\chessTera-main\trabajo infor\main_visual.cpp(114,20): warning C4244: 'argumento': conversión de 'int' a 'GLfloat'; posible pérdida de datos
+C:\Users\Rafa\Desktop\chessTera-main\trabajo infor\main_visual.cpp(115,30): warning C4244: 'argumento': conversión de 'int' a 'GLfloat'; posible pérdida de datos
+C:\Users\Rafa\Desktop\chessTera-main\trabajo infor\main_visual.cpp(115,20): warning C4244: 'argumento': conversión de 'int' a 'GLfloat'; posible pérdida de datos
+C:\Users\Rafa\Desktop\chessTera-main\trabajo infor\main_visual.cpp(116,23): warning C4244: 'argumento': conversión de 'int' a 'GLfloat'; posible pérdida de datos
+  Generando código...
+  ajedrez siro.vcxproj -> C:\Users\Rafa\Desktop\chessTera-main\trabajo infor\x64\Debug\Trabajo infor.exe
