@@ -22,6 +22,11 @@ bool Reina::movimientoValido(int xi, int yi, int xf, int yf, Pieza** tablero, in
         return false;
     }
 
+    if (xi == xf && yi == yf) {
+        // Si la casilla origen y destino coinciden, no es un movimiento válido
+        return false;
+    }
+
     // Movimiento diagonal
     if (abs(dx) == abs(dy)) {
         int stepX = (dx > 0) ? 1 : -1;
@@ -31,6 +36,12 @@ bool Reina::movimientoValido(int xi, int yi, int xf, int yf, Pieza** tablero, in
             int columna = yi + i * stepY;
             if (tablero[fila * columnas + columna] != nullptr)
                 return false; // Obstáculo en el camino
+        }
+        Pieza* destino = tablero[xf * columnas + yf];
+        if (destino) {
+            char s = destino->obtenerSimbolo();
+            if ((esBlanco && s == 'R') || (!esBlanco && s == 'r'))
+                return false;
         }
         return true;
     }
@@ -43,6 +54,12 @@ bool Reina::movimientoValido(int xi, int yi, int xf, int yf, Pieza** tablero, in
             if (tablero[fila * columnas + yi] != nullptr)
                 return false;
         }
+        Pieza* destino = tablero[xf * columnas + yf];
+        if (destino) {
+            char s = destino->obtenerSimbolo();
+            if ((esBlanco && s == 'R') || (!esBlanco && s == 'r'))
+                return false;
+        }
         return true;
     }
 
@@ -52,6 +69,12 @@ bool Reina::movimientoValido(int xi, int yi, int xf, int yf, Pieza** tablero, in
         for (int i = 1; i < abs(dy); i++) {
             int columna = yi + i * step;
             if (tablero[xi * columnas + columna] != nullptr)
+                return false;
+        }
+        Pieza* destino = tablero[xf * columnas + yf];
+        if (destino) {
+            char s = destino->obtenerSimbolo();
+            if ((esBlanco && s == 'R') || (!esBlanco && s == 'r'))
                 return false;
         }
         return true;

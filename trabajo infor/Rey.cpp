@@ -18,6 +18,12 @@ bool Rey::movimientoValido(int xi, int yi, int xf, int yf, Pieza** tablero, int 
         xf < 0 || xf >= filas || yf < 0 || yf >= columnas) {
         return false; // Movimiento fuera del tablero
     }
+
+    if (xi == xf && yi == yf) {
+        // Si la casilla origen y destino coinciden, no es un movimiento válido
+        return false;
+    }
+
     int dx = std::abs(xf - xi);
     int dy = std::abs(yf - yi);
 

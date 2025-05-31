@@ -43,34 +43,51 @@ Pieza* Tablero::obtenerPieza(int x, int y) {
 }
 
 bool Tablero::reyEnJaque(bool esBlanco) {
+    const int FILAS = 4;
+    const int COLUMNAS = 4;
     int reyX = -1, reyY = -1;
 
-    // Buscar la posición del rey del color actual
-    for (int i = 0; i < 4; ++i) {
-        for (int j = 0; j < 4; ++j) {
+    // 1) Localizar al rey y salir de ambos bucles al encontrarlo
+    for (int i = 0; i < FILAS; ++i) {
+        for (int j = 0; j < COLUMNAS; ++j) {
             Pieza* p = casillas[i][j];
-            if (p && p->esBlanca() == esBlanco && (p->obtenerSimbolo() == 'R' || p->obtenerSimbolo() == 'r')) {
-                reyX = i;
-                reyY = j;
-                break;
+            if (p && p->esBlanca() == esBlanco) {
+                char s = p->obtenerSimbolo();
+                if (s == 'R' || s == 'r') {
+                    reyX = i;
+                    reyY = j;
+                    break;
+                }
             }
         }
+        if (reyX != -1) break;
     }
 
-    if (reyX == -1 || reyY == -1) return false; // Rey no encontrado
+    if (reyX < 0) {
+        std::cout << "[Debug reyEnJaque] No se encontro el rey." << std::endl;
+        return false;
+    }
+    std::cout << "[Debug reyEnJaque] Rey en (" << reyX << "," << reyY << ")" << std::endl;
 
-    // Buscar si alguna pieza enemiga puede capturarlo
-    for (int i = 0; i < 4; ++i) {
-        for (int j = 0; j < 4; ++j) {
+    // 2) Comprobar si alguna pieza enemiga puede moverse al rey
+    for (int i = 0; i < FILAS; ++i) {
+        for (int j = 0; j < COLUMNAS; ++j) {
             Pieza* atacante = casillas[i][j];
             if (atacante && atacante->esBlanca() != esBlanco) {
-                if (atacante->movimientoValido(i, j, reyX, reyY, (Pieza**)casillas, 4, 4)) {
+                if (atacante->movimientoValido(
+                    i, j,
+                    reyX, reyY,
+                    (Pieza**)casillas,
+                    FILAS, COLUMNAS)) {
+                    std::cout << "[Debug reyEnJaque] Ataque detectado por pieza en ("
+                        << i << "," << j << ")" << std::endl;
                     return true;
                 }
             }
         }
     }
 
+    // 3) Ningun ataque valido -> no esta en jaque
     return false;
 }
 
@@ -85,6 +102,14 @@ int Tablero::moverPieza(int xi, int yi, int xf, int yf) {
 
     if (!origen->movimientoValido(xi, yi, xf, yf, (Pieza**)casillas, 4, 4))
         return 0;
+
+    if (destino) {
+        char simb = destino->obtenerSimbolo();
+        if (simb == 'R' || simb == 'r') {
+            std::cout << "No se puede capturar al rey.\n";
+            return 0;
+        }
+    }
 
     // Simular movimiento
     casillas[xf][yf] = origen;
@@ -154,33 +179,45 @@ void Tablero::cargarSilverman() {
     casillas[3][2] = new Rey(true);
     casillas[3][3] = new Torre(true);
 }
+
 bool Tablero::esJaqueMate(bool turnoBlanco) {
-    // Paso 1: ¿está el rey en jaque?
-    if (!reyEnJaque(turnoBlanco)) return false;
+    const int FILAS = 4;
+    const int COLUMNAS = 4;
 
-    // Paso 2: buscar si alguna pieza del jugador puede salvarse
-    for (int i = 0; i < 4; ++i) {
-        for (int j = 0; j < 4; ++j) {
+    // 1) Si no hay jaque, no puede ser jaque mate
+    if (!reyEnJaque(turnoBlanco)) {
+        std::cout << "[Debug] No esta en jaque, no hay jaque mate." << std::endl;
+        return false;
+    }
+
+    // 2) Simular cada movimiento propio para ver si alguno quita el jaque
+    for (int i = 0; i < FILAS; ++i) {
+        for (int j = 0; j < COLUMNAS; ++j) {
             Pieza* p = casillas[i][j];
-            if (p && p->esBlanca() == turnoBlanco) {
-                // Probar todos los destinos posibles
-                for (int x = 0; x < 4; ++x) {
-                    for (int y = 0; y < 4; ++y) {
-                        if (p->movimientoValido(i, j, x, y, (Pieza**)casillas, 4, 4)) {
-                            // Simular movimiento
-                            Pieza* temp = casillas[x][y];
-                            casillas[x][y] = p;
-                            casillas[i][j] = nullptr;
+            if (!p || p->esBlanca() != turnoBlanco)
+                continue;
 
-                            bool sigueEnJaque = reyEnJaque(turnoBlanco);
+            for (int x = 0; x < FILAS; ++x) {
+                for (int y = 0; y < COLUMNAS; ++y) {
+                    if (x == i && y == j)
+                        continue;
+                    if (p->movimientoValido(i, j, x, y,
+                        (Pieza**)casillas,
+                        FILAS, COLUMNAS)) {
+                        // simular
+                        Pieza* backup = casillas[x][y];
+                        casillas[x][y] = p;
+                        casillas[i][j] = nullptr;
 
-                            // Deshacer
-                            casillas[i][j] = p;
-                            casillas[x][y] = temp;
+                        bool sigueEnJaque = reyEnJaque(turnoBlanco);
 
-                            if (!sigueEnJaque) {
-                                return false; // hay al menos un movimiento que evita el jaque
-                            }
+                        // deshacer
+                        casillas[i][j] = p;
+                        casillas[x][y] = backup;
+
+                        if (!sigueEnJaque) {
+                            std::cout << "[Debug] Movimiento de (" << i << "," << j;
+                            return false;
                         }
                     }
                 }
@@ -188,6 +225,7 @@ bool Tablero::esJaqueMate(bool turnoBlanco) {
         }
     }
 
-    // Si ninguna pieza puede salvarse del jaque:
+    // ningun movimiento evita el jaque -> jaque mate
+    std::cout << "[Debug] Jaque mate detectado." << std::endl;
     return true;
 }

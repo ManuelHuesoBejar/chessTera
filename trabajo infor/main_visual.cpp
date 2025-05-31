@@ -19,6 +19,8 @@ Tablero_al t2;
 // Estado de selección
 int seleccionX = -1, seleccionY = -1;
 bool turnoBlancas = true;  // true = blancas, false = negras
+bool gameOver = false;
+bool ganadorBlancas = false;
 
 int obtenerFilas(Tablero& tablero) { return 4; }
 int obtenerFilas(Tablero_al& tablero) { return 6; }
@@ -41,79 +43,18 @@ void cargarTexturas() {
 }
 
 void display() {
-    /*glClear(GL_COLOR_BUFFER_BIT);
-    glLoadIdentity();
-
-    for (int i = 0; i < 4; ++i) {
-        for (int j = 0; j < 4; ++j) {
-            float x = j;
-            float y = 3 - i;
-
-            // Casilla base
-            if ((i + j) % 2 == 0)
-                glColor3f(1.0f, 1.0f, 1.0f);
-            else
-                glColor3f(0.5f, 0.5f, 0.5f);
-
-            glBegin(GL_QUADS);
-            glVertex2f(x, y);
-            glVertex2f(x + 1, y);
-            glVertex2f(x + 1, y + 1);
-            glVertex2f(x, y + 1);
-            glEnd();
-
-            // Resaltar pieza seleccionada
-            if (i == seleccionX && j == seleccionY) {
-                glColor3f(0.0f, 1.0f, 0.0f); // verde
-                glLineWidth(3);
-                glBegin(GL_LINE_LOOP);
-                glVertex2f(x, y);
-                glVertex2f(x + 1, y);
-                glVertex2f(x + 1, y + 1);
-                glVertex2f(x, y + 1);
-                glEnd();
-            }
-
-            // Pieza (si hay)
-            Pieza* pieza = t.obtenerPieza(i, j);
-            if (pieza) {
-                std::string clave = pieza->obtenerNombreClave();
-                if (texturas.count(clave)) {
-                    glEnable(GL_TEXTURE_2D);
-                    glBindTexture(GL_TEXTURE_2D, texturas[clave]);
-                    glColor3f(1, 1, 1);
-                    glBegin(GL_QUADS);
-                    glTexCoord2f(0, 0); glVertex2f(x, y);
-                    glTexCoord2f(1, 0); glVertex2f(x + 1, y);
-                    glTexCoord2f(1, 1); glVertex2f(x + 1, y + 1);
-                    glTexCoord2f(0, 1); glVertex2f(x, y + 1);
-                    glEnd();
-                    glDisable(GL_TEXTURE_2D);
-                }
-            }
-        }
-    }
-
-    glutSwapBuffers();
-}*/
     glClear(GL_COLOR_BUFFER_BIT);
     glLoadIdentity();
 
     int filas, columnas;
     if (opcion == 1) {
-        std::cout << "Opcion es 1 (Los Alamos)\n";
-        std::cout << "Tipo de t2: " << typeid(t2).name() << std::endl;
         filas = obtenerFilas(t2);
         columnas = obtenerColumnas(t2);
-        std::cout << "Filas: " << filas << ", Columnas: " << columnas << std::endl;
     }
     else {
-        std::cout << "Opcion es 2 (Silverman)\n";
-        std::cout << "Tipo de t: " << typeid(t).name() << std::endl;
         filas = obtenerFilas(t);
         columnas = obtenerColumnas(t);
     }
-    std::cout << "Filas: " << filas << ", Columnas: " << columnas << std::endl;
 
     for (int i = 0; i < filas; ++i) {
         for (int j = 0; j < columnas; ++j) {
@@ -165,7 +106,27 @@ void display() {
             }
         }
     }
+    if (gameOver) {
+        // Capa semitransparente
+        glColor4f(0, 0, 0, 0.6f);
+        glBegin(GL_QUADS);
+        glVertex2f(0, 0);
+        glVertex2f(columnas, 0);
+        glVertex2f(columnas, filas);
+        glVertex2f(0, filas);
+        glEnd();
 
+        // Texto “Fin de la partida” y ganador
+        std::string mensaje1 = "¡Fin de la partida!";
+        std::string mensaje2 = ganadorBlancas ? "Ganan las Blancas" : "Ganan las Negras";
+
+        glColor3f(1, 1, 1);
+        glRasterPos2f(columnas / 2 - 2.5f, filas / 2 + 0.5f);
+        for (char c : mensaje1) glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, c);
+
+        glRasterPos2f(columnas / 2 - 2.0f, filas / 2 - 0.5f);
+        for (char c : mensaje2) glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, c);
+    }
     glutSwapBuffers();
 }
 
@@ -180,50 +141,74 @@ void reshape(int w, int h) {
 }
 
 void manejarClic(int fila, int columna) {
-    Pieza* piezaClicada = (opcion == 1) ? t2.obtenerPieza_al(fila, columna)
-                                        : t.obtenerPieza(fila, columna);
+    if (gameOver) return;
 
+    Pieza* piezaClicada = (opcion == 1)
+        ? t2.obtenerPieza_al(fila, columna)
+        : t.obtenerPieza(fila, columna);
 
     if (seleccionX == -1 && seleccionY == -1) {
-        // Primer clic: seleccionar una pieza del turno actual
-        if (piezaClicada != nullptr && piezaClicada->esBlanca() == turnoBlancas) {
+        if (piezaClicada && piezaClicada->esBlanca() == turnoBlancas) {
             seleccionX = fila;
             seleccionY = columna;
-            std::cout << "Pieza seleccionada en [" << fila << ", " << columna << "]\n";
-            // Aquí podrías añadir alguna retroalimentación visual más directa si es necesario
+            std::cout << "Pieza seleccionada en ["
+                << fila << "," << columna << "]\n";
         }
         else {
-            std::cout << "Clic en casilla vacía o pieza del oponente.\n";
-            // No hacer nada si se hace clic en una casilla vacía o una pieza del oponente en el primer clic
+            std::cout << "Clic en casilla vacia o pieza del oponente.\n";
         }
+        return;
+    }
+
+    if (fila == seleccionX && columna == seleccionY) {
+        seleccionX = seleccionY = -1;
+        std::cout << "Deseleccionada la pieza en ["
+            << fila << "," << columna << "]\n";
+        return;
+    }
+
+    std::cout << "Intento de mover desde ["
+        << seleccionX << "," << seleccionY
+        << "] a [" << fila << "," << columna << "]\n";
+
+    // 1) Ejecutar movimiento
+    int resultado = (opcion == 1)
+        ? t2.moverPieza_al(seleccionX, seleccionY, fila, columna)
+        : t.moverPieza(seleccionX, seleccionY, fila, columna);
+
+    if (resultado == 0) {
+        std::cout << "Movimiento invalido.\n";
+        seleccionX = seleccionY = -1;
+        return;
+    }
+
+    // 2) ¿He capturado al rey rival?
+    if (resultado == 2) {
+        gameOver = true;
+        ganadorBlancas = turnoBlancas;
     }
     else {
-        // Segundo clic: intentar mover la pieza seleccionada
-        if (fila == seleccionX && columna == seleccionY) {
-            // Segundo clic en la misma pieza: deseleccionar
-            seleccionX = -1;
-            seleccionY = -1;
-            std::cout << "Deseleccionada la pieza en [" << fila << ", " << columna << "]\n";
+        // 3) ¿Ha quedado mi oponente en jaque mate?
+        bool oponenteEnMate = (opcion == 1)
+            ? t2.esJaqueMate(!turnoBlancas)
+            : t.esJaqueMate(!turnoBlancas);
+
+        if (oponenteEnMate) {
+            gameOver = true;
+            ganadorBlancas = turnoBlancas;
         }
         else {
-            std::cout << "Intento de mover desde [" << seleccionX << ", " << seleccionY << "] a [" << fila << ", " << columna << "]\n";
-            int resultado = (opcion == 1)
-                ? t2.moverPieza_al(seleccionX, seleccionY, fila, columna)
-                : t.moverPieza(seleccionX, seleccionY, fila, columna);
-            if (resultado != 0) {
-                turnoBlancas = !turnoBlancas; // Cambiar turno si el movimiento fue válido
-                std::cout << (turnoBlancas ? "Turno de las blancas.\n" : "Turno de las negras.\n");
-            }
-            else {
-                std::cout << "Movimiento inválido.\n";
-                // Aquí podrías añadir alguna retroalimentación visual o de audio sobre el movimiento inválido
-            }
-            seleccionX = -1;
-            seleccionY = -1; // Resetear la selección después del intento de movimiento
+            // 4) Nada extraordinario: paso turno
+            turnoBlancas = !turnoBlancas;
+            std::cout << (turnoBlancas
+                ? "Turno de las blancas.\n"
+                : "Turno de las negras.\n");
         }
     }
 
-    glutPostRedisplay(); // Redibujar la escena para mostrar los cambios
+    // Reset selección y refrescar pantalla
+    seleccionX = seleccionY = -1;
+    glutPostRedisplay();
 }
 void mouse(int button, int state, int x, int y) {
     if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) {
@@ -270,7 +255,7 @@ int main(int argc, char** argv) {
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB);
     glutInitWindowSize(400, 400);
-    glutCreateWindow("Tablero 4x4 - Visual");
+    glutCreateWindow("Tablero - Visual");
 
     glewInit();
 

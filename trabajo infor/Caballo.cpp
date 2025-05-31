@@ -20,11 +20,27 @@ bool Caballo::movimientoValido(int xi, int yi, int xf, int yf, Pieza** tablero, 
         xf < 0 || xf >= filas || yf < 0 || yf >= columnas) {
         return false; // Movimiento fuera del tablero
     }
+
+    if (xi == xf && yi == yf) {
+        // Si la casilla origen y destino coinciden, no es un movimiento válido
+        return false;
+    }
+
     int dx = abs(xf - xi);
     int dy = abs(yf - yi);
 
     // Movimientos en forma de "L"
     if ((dx == 2 && dy == 1) || (dx == 1 && dy == 2)) {
+        Pieza* destino = tablero[xf * columnas + yf];
+        if (destino) {
+            char s = destino->obtenerSimbolo();
+            // Si es rey blanco y este caballo también es blanco → false
+            if (esBlanco && s == 'R')
+                return false;
+            // Si es rey negro y este caballo es negro → false
+            if (!esBlanco && s == 'r')
+                return false;
+        }
         return true; // Permite comerse cualquier pieza, incluso del mismo color
     }
     return false;
